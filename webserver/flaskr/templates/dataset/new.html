@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}New Dataset{% endblock %}
+{% endblock %}
+
+{% block card_title %}{% endblock %}
+
+{% block content %}
+  <form action="{{ url_for('dataset.create') }}" method="post" enctype="multipart/form-data">
+    <div class="row">
+      <div class="input-field col s6">
+        <input type ="text" class="validate" name="name" id="name" required>
+        <label for="name">Name of the dataset</label>
+      </div>
+
+      <div class="input-field col s6">
+        <input type ="text" class="validate" name="description" id="description" required>
+        <label for="description">Description</label>
+      </div>
+
+      <div class="input-field col s6">
+        <input type ="text" class="validate" name="tags" id="tags">
+        <label for="tags">Tags</label>
+      </div>
+
+      <div class="input-field col s6">
+        <input class="validate" type="number" name="files" id="files" required>
+        <label for="files">Number of files</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="file-field input-field">
+        <div class="btn">
+          <span>Dataset zip file</span>
+          <input id="dataset_file" name="dataset_file" type="file">
+        </div>
+
+       <div class="file-path-wrapper">
+         <input class="file-path" type="text">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field center">
+        <input type="submit" value="submit" class="btn">
+      </div>
+    </div>
+  </form>
+{% endblock %}
+
+{% block card_links %}
+  <a href="{{ url_for('dataset.index') }}">Return to index</a>
+{% endblock %}
