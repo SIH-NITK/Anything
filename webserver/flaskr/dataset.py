@@ -6,11 +6,18 @@ from flask import (
 
 from flaskr.db import get_db
 
-bp = Blueprint('dataset', __name__, url_prefix='/datasets')
+bp = Blueprint('dataset', __name__)
 
 @bp.route('/', methods=['GET'])
 def index():
-    return render_template('dataset/index.html')
+    db = get_db()
+    datasets = db.execute('SELECT * FROM dataset').fetchall()
+
+    return render_template('dataset/index.html', datasets=datasets)
+
+@bp.route('/new', methods=['GET'])
+def new():
+    return render_template('dataset/new.html')
 
 @bp.route('/', methods=['POST'])
 def create():

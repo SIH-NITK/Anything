@@ -1,9 +1,41 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Datasets{% endblock %}</h1>
+  {% block title %}Datasets{% endblock %}
 {% endblock %}
 
+{% block card_title %}{% endblock %}
+
 {% block content %}
-<p>Index page for datasets</p>
+  <table> 
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Tags</th>
+        <th>Dataset size</th>
+        <th>Files</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for dataset in datasets %}
+        <tr>
+          <td>
+            <a class="action" href="{{ url_for('dataset.show', dataset_id=dataset['id']) }}">
+              {{ dataset['name'] }}
+            </a>
+          </td>
+          <td>{{ dataset['description'] }}</td>
+          <td>{{ dataset['tags'] }}</td>
+          <td>{{ dataset['dataset_size'] }} MB</td>
+          <td>{{ dataset['files'] }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
+{% block card_links %}
+  <a href="{{ url_for('dataset.new') }}">Add more datasets</a>
 {% endblock %}
