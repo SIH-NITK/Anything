@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.method.HideReturnsTransformationMethod;
 import android.util.Log;
@@ -37,35 +38,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(MainActivity.this,ShowImage.class));
-        getImage=findViewById(R.id.get_image);
-        getImage.setOnClickListener(new View.OnClickListener() {
+
+        CountDownTimer timer = new CountDownTimer(1000,1000) {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,ShowImage.class));
+            public void onTick(long millisUntilFinished) {
+
             }
-        });
 
-        Map<String,String> params =new HashMap<>();
-        params.put("user_login","123");
-        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-        ServerRequest<String> request = new ServerRequest<String>(Request.Method.GET,
-                url,
-                String.class,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.d(TAG, "onResponse: "+response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            @Override
+            public void onFinish() {
+                Intent intent = new Intent(MainActivity.this,ShowImage.class);
+                startActivity(intent);
+                finish();
+                overridePendingTransition(0,0);
+            }
+        }.start();
 
-                    }
-                });
-        request.setTag(TAG);
-        SingletonRequestQueue.getInstance(this).addToRequestQueue(request);
+//        Map<String,String> params =new HashMap<>();
+//        params.put("user_login","123");
+//        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
+//        ServerRequest<String> request = new ServerRequest<String>(Request.Method.GET,
+//                url,
+//                String.class,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        Log.d(TAG, "onResponse: "+response);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//        request.setTag(TAG);
+//        SingletonRequestQueue.getInstance(this).addToRequestQueue(request);
 
 
     }

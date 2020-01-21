@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.carlonzo.stikkyheader:core:0.0.3-SNAPSHOT@aar">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d20c7ba46b18305ee0bda95a0e0833e2/jetified-core-0.0.3-SNAPSHOT/annotations.zip!/" />
+    </ANNOTATIONS>
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d20c7ba46b18305ee0bda95a0e0833e2/jetified-core-0.0.3-SNAPSHOT/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/d20c7ba46b18305ee0bda95a0e0833e2/jetified-core-0.0.3-SNAPSHOT/res" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.carlonzo.stikkyheader/core/0.0.3-SNAPSHOT/652e7e8b7af619f13e6490a4bc1f46ea6c84292e/core-0.0.3-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.carlonzo.stikkyheader/core/0.0.3-SNAPSHOT/790b2e4c03aff178fc3117fa995dcfa84a8b2c99/core-0.0.3-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

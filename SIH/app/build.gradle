@@ -32,6 +32,11 @@ dependencies {
     //image zoom
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
 
+    implementation "com.android.support:support-v4:+"
+    implementation 'com.squareup.picasso:picasso:2.3.2'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.daimajia.slider:library:1.1.5@aar'
+
     implementation 'com.github.carlonzo.stikkyheader:core:0.0.3-SNAPSHOT'
 
 }
