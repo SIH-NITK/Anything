@@ -2,7 +2,7 @@ import functools
 import os
 
 from flask import (
-    Blueprint, flash, g, redirect, render_template, url_for, request
+    Blueprint, flash, g, redirect, render_template, url_for, request, jsonify
 )
 
 from flaskr.db import get_db
@@ -16,6 +16,22 @@ def index():
     datasets = db.execute('SELECT * FROM dataset').fetchall()
 
     return render_template('dataset/index.html', datasets=datasets)
+
+@bp.route('/api/datasets', methods=['GET'])
+def api_index():
+    """Action for JSON calls by android API."""
+    db = get_db()
+    datasets = db.execute('SELECT * FROM dataset').fetchall()
+    
+    responses = {}
+    columns = ['name', 'description', 'tags', 'dataset_file_size', 'files']
+
+    for dataset in datasets:
+        response = dict(zip(columns, [dataset[column] for column in columns]))
+        response['link'] = url_for('dataset.api_show', dataset_id=dataset['id'])
+        responses[dataset['id']] = response
+
+    return jsonify(dict(responses))
 
 @bp.route('/new', methods=['GET'])
 def new():
@@ -55,3 +71,15 @@ def show(dataset_id):
     dataset = db.execute('SELECT * FROM dataset WHERE id = ?', (dataset_id,)).fetchone()
     graph_path = os.path.join('results', str(dataset_id) + '.png')
     return render_template('dataset/show.html', dataset=dataset, graph_path=graph_path)
+
+@bp.route('/api/dataset/<int:dataset_id>', methods=['GET'])
+def api_show(dataset_id):
+    """Action for JSON calls by android API."""
+    db = get_db()
+    dataset = db.execute('SELECT * FROM dataset WHERE id = ?', (dataset_id, )).fetchone()
+
+    columns = ['name', 'description', 'tags', 'dataset_file_size', 'files']
+    response = dict(zip(columns, [dataset[column] for column in columns]))
+    response['graph_path'] = os.path.join('static', 'results', str(dataset_id) + '.png')
+
+    return jsonify(response)
