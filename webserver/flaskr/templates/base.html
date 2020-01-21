@@ -3,10 +3,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
 <nav>
-  <div class="nav-wrapper">
+  <div class="nav-wrapper container">
     <a href="#" class="brand-logo">Smart India Hackathon 2020</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
-      <li><a href="#">Predict</a></li>
       <li><a href="{{ url_for('dataset.index') }}">Datasets</a></li>
     </ul>
   </div>
@@ -21,7 +20,7 @@
     <div class="flash">{{ message }}</div>
   {% endfor %}
 
-  <div class="row">
+  <div class="row container">
     <div class="card">
       <div class="card-content">
         <span class="card-title">{% block card_title %}{% endblock %}</span>

@@ -51,4 +51,7 @@ def create():
 
 @bp.route('/<int:dataset_id>', methods=['GET'])
 def show(dataset_id):
-    return render_template('dataset/show.html', dataset)
+    db = get_db()
+    dataset = db.execute('SELECT * FROM dataset WHERE id = ?', (dataset_id,)).fetchone()
+    graph_path = os.path.join('results', str(dataset_id) + '.png')
+    return render_template('dataset/show.html', dataset=dataset, graph_path=graph_path)

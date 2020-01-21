@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}{{ dataset['name'] }}{% endblock %}
+{% endblock %}
+
+{% block card_title %}{% endblock %}
+
+{% block content %}
+  <table>
+    <tr>
+      <th>Name</th>
+      <td>{{ dataset['name'] }}</td>
+    </tr>
+
+    <tr>
+      <th>Description</th>
+      <td>{{ dataset['description'] }}</td>
+    </tr>
+
+    <tr>
+      <th>Tags</th>
+      <td>{{ dataset['tags'] }}</td>
+    </tr>
+
+    <tr>
+      <th>Number of files</th>
+      <td>{{ dataset['files'] }}</td>
+    </tr>
+
+    <tr>
+      <th>Dataset size</th>
+      <td>{{ dataset['dataset_file_size'] }} Mb</td>
+    </tr>
+  </table>
+
+  <center>
+    <img class="materialboxed" width="650" src="{{ url_for('static', filename=graph_path) }}">
+  </center>
+{% endblock %}
+
+{% block card_links %}
+  <a href="{{ url_for('dataset.index') }}">Return to index</a>
+{% endblock %}
