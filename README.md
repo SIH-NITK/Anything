@@ -2,8 +2,17 @@
 
 TODO: Add description
 
-TODO: Explain technologies used
+## Technologies Used
+- Flask
+- Android Studio
 
-TODO: Add setup/demo instructions
+## Setup Instrucions
+- For Setup instructions, refer to the README of individual components.
 
-TODO: Add team members
+## Team Members
+- K Krishna Swaroop
+- Abhishek Kumar
+- Harsh Agarwal
+- V R Sandeep
+- Harshavardhan R
+- P Akshara
