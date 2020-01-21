@@ -6,6 +6,12 @@ TODO: Add description
 - Flask
 - Android Studio
 
+## Screenshots
+### Web Application
+- ![Index Page](./Screenshots/2.jpeg)
+- ![Create Page](./Screenshots/3.jpeg)
+- ![Display Page](./Screenshots/1.jpeg)
+
 ## Setup Instrucions
 - For Setup instructions, refer to the README of individual components.
 
