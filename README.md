@@ -5,6 +5,8 @@ TODO: Add description
 ## Technologies Used
 - Flask
 - Android Studio
+- OpenCV
+- Matlab
 
 ## Screenshots
 ### Web Application
