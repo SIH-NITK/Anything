@@ -1,6 +1,13 @@
-# Extraction of Crop Cycle Parameters
+# Description
+Given 48 time series, satellite images of a particular land, we provide insights on:
+- When the crops are sown and harvested
+- The yield of the land
 
-TODO: Add description
+# Extraction of Crop Cycle Parameters
+Useful information from the images was extraxted using some image processing techniques involving:
+- Image Thresholding
+- NDVI filtering
+- PCA
 
 ## Technologies Used
 - Flask
