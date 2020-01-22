@@ -8,6 +8,11 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
-        'python-dotenv'
+        'python-dotenv',
+        'PIL',
+        'numpy',
+        'matplotlib',
+        'seaborn',
+        'zipfile'
     ],
 )

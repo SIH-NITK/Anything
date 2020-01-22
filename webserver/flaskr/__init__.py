@@ -1,6 +1,9 @@
 import os
 
 from flask import Flask
+from . import db
+from . import dataset
+from . import estimator
 
 def create_app(test_config=None):
     """Create and configure application instance."""
@@ -27,10 +30,8 @@ def create_app(test_config=None):
     def predict():
         return 'Get your predictions here!'
 
-    from . import db
     db.init_app(app)
-
-    from . import dataset
     app.register_blueprint(dataset.bp)
+    estimator.add_estimate_to_cli(app)
 
     return app
