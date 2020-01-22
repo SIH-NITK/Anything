@@ -111,14 +111,14 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:padding="4dp"
-                    android:text="January 15 2018" />
+                    android:text="February 15 2017" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:padding="4dp"
-                    android:text="October 15 2018" />
+                    android:text="March 15 2018" />
 
             </LinearLayout>
 
