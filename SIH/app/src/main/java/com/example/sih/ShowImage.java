@@ -5,13 +5,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -20,19 +26,24 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     SliderLayout mDemoSlider;
+    ImageView mImageView;
     private static final String TAG = "ShowImage";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
+        getDetails();
     context=this;
         mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 
@@ -140,40 +151,69 @@ public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSli
 
     }
     Context context;
-    CropInference cropDetails=new CropInference();
+    CropInference[] cropDetails= new CropInference[0];
     void getDetails(){
-        String url="";
-        ServerRequest<JSONObject> tellIrisRequest = new ServerRequest<JSONObject>(Request.Method.POST,
+        String url="http://192.168.43.208:80/api/datasets";
+        ServerRequest<JSONArray> request = new ServerRequest<JSONArray>(Request.Method.GET,
                 url,
-                JSONObject.class,
-                new Response.Listener<JSONObject>() {
+                JSONArray.class,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
 
-                        cropDetails=new Gson().fromJson(response.toString(),CropInference.class);
-                        SingletonRequestQueue.getInstance(context)
-                                .getRequestQueue()
-                                .cancelAll(TAG);
-
+                        cropDetails = new Gson().fromJson(response.toString(), CropInference[].class);
+                        Log.d(TAG, "onResponse: "+cropDetails);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(context, "Connection error. The response will be uploaded later", Toast.LENGTH_SHORT).show();
-                        error.printStackTrace();
-                        //increment the retry count and make the request again
+                        Log.d(TAG, "onErrorResponse: "+error);
                     }
-                })
-                ;
-        tellIrisRequest.setTag(TAG);
-        SingletonRequestQueue.getInstance(context).addToRequestQueue(tellIrisRequest);
+                });
+//                .withHeaders(headers);
+        request.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
 
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        request.setTag(TAG);
+        SingletonRequestQueue.getInstance(this).addToRequestQueue(request);
     }
     RecyclerView recyclerView;
     private void setUpRecyclerView(CropInference crop) {
 //        recyclerView=findViewById(R.id.rv_my_bookings_list);
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setAdapter(new CropInference(crop));
+    }
+    private class LoadImage extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Simulates a background job.
+
+//            try {
+//                mImageView.setImageDrawable(grabImageFromUrl(image_url));
+//            } catch (Exception e) {
+//                e.getStackTrace().toString();
+//            }
+            return null;
+        }
+
+    }
+
+    private Drawable grabImageFromUrl(String url) throws Exception {
+        return Drawable.createFromStream((InputStream)new URL(url).getContent(), "src");
     }
 }

@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffaf49">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:custom="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
@@ -37,10 +36,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            custom:auto_cycle="true"
-            custom:indicator_visibility="invisible"
-            custom:pager_animation="FlipHorizontal"
-            custom:pager_animation_span="1100" />
+            app:auto_cycle="true"
+            app:indicator_visibility="invisible"
+            app:pager_animation="FlipHorizontal"
+            app:pager_animation_span="1100" />
 
         <TextView
             android:id="@+id/graphText"
@@ -89,28 +88,55 @@
             android:textColor="#000000"
             android:textSize="24sp"
             android:textStyle="bold"/>
-        <LinearLayout
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/inferenceText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:background="8dpr"
-            android:orientation="vertical"
-            android:padding="8dp">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
 
-        </LinearLayout>
+<!--        <ImageView-->
+<!--            android:id="@+id/iv"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/graph"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical">-->
+<!--&lt;!&ndash;            android:layout_margin="@dimen/margin_normal"&ndash;&gt;-->
+<!--&lt;!&ndash;            android:background="@drawable/blue_rectangle_border"&ndash;&gt;-->
+
+<!--`-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:padding="4dp"-->
+<!--                android:text="Harvest Time"-->
+<!-- />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tv_forwarded_by_display"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:padding="4dp"-->
+
+<!--                android:text="gsgsdg"/>-->
+<!--&lt;!&ndash;                android:layout_margin="@dimen/margin_large"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:fontFamily="@font/lato_regular"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:text="@string/infrastructure_booking_title"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textColor="@color/black"&ndash;&gt;-->
+<!--&lt;!&ndash;                android:textSize="@dimen/text_size_larger"&ndash;&gt;-->
+
+
+
+<!--        </LinearLayout>-->
+
 
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
