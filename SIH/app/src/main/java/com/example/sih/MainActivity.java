@@ -54,27 +54,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
 
-//        Map<String,String> params =new HashMap<>();
-//        params.put("user_login","123");
-//        RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
-//        ServerRequest<String> request = new ServerRequest<String>(Request.Method.GET,
-//                url,
-//                String.class,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        Log.d(TAG, "onResponse: "+response);
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//
-//                    }
-//                });
-//        request.setTag(TAG);
-//        SingletonRequestQueue.getInstance(this).addToRequestQueue(request);
-
-
     }
 }

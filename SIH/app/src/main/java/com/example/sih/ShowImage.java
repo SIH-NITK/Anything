@@ -1,36 +1,46 @@
 package com.example.sih;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.TextView;
+
+import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
     SliderLayout mDemoSlider;
+    private static final String TAG = "ShowImage";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_image);
-
+    context=this;
         mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 
         //replace the text with dates, i'm too sleepy to parse the date from original images
-        HashMap<String,Integer> file_maps = returnHashMap();
+        Map<String,Integer> file_maps = returnHashMap();
         for(String name:file_maps.keySet())
         {
+            Log.d(TAG, "onCreate: "+file_maps.get(name));
             TextSliderView textSliderView = new TextSliderView(this);
             textSliderView.description(name)
                     .image(file_maps.get(name)).setScaleType(BaseSliderView.ScaleType.Fit)
@@ -54,7 +64,7 @@ public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSli
         super.onStop();
     }
 
-    private HashMap<String, Integer> returnHashMap() {
+    private Map<String, Integer> returnHashMap() {
         HashMap<String,Integer> file_maps = new HashMap<String, Integer>();
         file_maps.put("2017/01/15-2",R.drawable.crop1);
         file_maps.put("2017/11/15-2",R.drawable.crop2);
@@ -104,7 +114,9 @@ public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSli
         file_maps.put("2017/02/15-2",R.drawable.crop46);
         file_maps.put("2018/05/15-1",R.drawable.crop47);
         file_maps.put("2017/05/15-2",R.drawable.crop48);
-        return file_maps;
+
+        Map<String,Integer> sortedmap=new TreeMap<String,Integer>(file_maps);
+        return sortedmap;
     }
 
     @Override
@@ -126,5 +138,42 @@ public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSli
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+    Context context;
+    CropInference cropDetails=new CropInference();
+    void getDetails(){
+        String url="";
+        ServerRequest<JSONObject> tellIrisRequest = new ServerRequest<JSONObject>(Request.Method.POST,
+                url,
+                JSONObject.class,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        cropDetails=new Gson().fromJson(response.toString(),CropInference.class);
+                        SingletonRequestQueue.getInstance(context)
+                                .getRequestQueue()
+                                .cancelAll(TAG);
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(context, "Connection error. The response will be uploaded later", Toast.LENGTH_SHORT).show();
+                        error.printStackTrace();
+                        //increment the retry count and make the request again
+                    }
+                })
+                ;
+        tellIrisRequest.setTag(TAG);
+        SingletonRequestQueue.getInstance(context).addToRequestQueue(tellIrisRequest);
+
+    }
+    RecyclerView recyclerView;
+    private void setUpRecyclerView(CropInference crop) {
+//        recyclerView=findViewById(R.id.rv_my_bookings_list);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(new CropInference(crop));
     }
 }
