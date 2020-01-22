@@ -37,6 +37,18 @@
   <center>
     <img class="materialboxed" width="650" src="{{ url_for('static', filename=graph_path) }}">
   </center>
+
+  <table>
+    <tr>
+      <th>Harvest Dates</th>
+      <td>{{ harvest_dates }}</td>
+    </tr>
+
+    <tr>
+      <th>Sow Dates</th>
+      <td>{{ sow_dates }}</td>
+    </tr>
+  </table>
 {% endblock %}
 
 {% block card_links %}

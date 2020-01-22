@@ -61,7 +61,7 @@ def create():
     db.commit()
 
     dataset_id = db.execute('SELECT * FROM dataset ORDER BY id DESC').fetchone()['id']
-    estimator.calculate(dataset_id)
+    harvest_dates, sow_dates = estimator.calculate(dataset_id)
 
     return redirect(url_for('dataset.show', dataset_id=dataset_id))
 
@@ -70,7 +70,9 @@ def show(dataset_id):
     db = get_db()
     dataset = db.execute('SELECT * FROM dataset WHERE id = ?', (dataset_id,)).fetchone()
     graph_path = os.path.join('results', str(dataset_id) + '.png')
-    return render_template('dataset/show.html', dataset=dataset, graph_path=graph_path)
+
+    harvest_dates, sow_dates = estimator.calculate(dataset_id)
+    return render_template('dataset/show.html', dataset=dataset, graph_path=graph_path, harvest_dates=harvest_dates, sow_dates=sow_dates)
 
 @bp.route('/api/dataset/<int:dataset_id>', methods=['GET'])
 def api_show(dataset_id):

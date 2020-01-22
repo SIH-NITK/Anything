@@ -7,6 +7,7 @@ from flask import current_app, g
 from flask.cli import with_appcontext
 
 from flaskr.db import get_db, close_db
+from datetime import datetime
 
 import cv2
 import numpy as np
@@ -21,12 +22,18 @@ def calculate(dataset_id):
 
     dataset_filepath = os.path.join('uploads', dataset['dataset_file_name'])
 
+    harvest_dates = []
+    sow_dates = []
+
     # Create temporary directory
     with tempfile.TemporaryDirectory(dir='uploads') as temp_dir:
         root_path = extract_zip(dataset_filepath, temp_dir)
 
         nvdi_density = []
         image_files = sorted(os.listdir(root_path))
+
+        year = set(filename[11:-19] for filename in image_files)
+        timestamps = [filename[11:-12] for filename in image_files]
 
         for image_file in image_files:
             # Read image in grey scale
@@ -40,15 +47,29 @@ def calculate(dataset_id):
 
             # Calculate number of crop pixels per pixel
             nvdi_density.append(cv2.countNonZero(image)/(image.shape[0] * image.shape[1]))
-            # nvdi_density.append(cv2.countNonZero(image)/(image.shape[0] * image.shape[1]))
 
         plt.plot(range(len(image_files)), nvdi_density, 'ro-')
+        plt.xlabel('Image number')
+        plt.ylabel('Crop Density')
         plt.savefig(os.path.join('flaskr', 'static', 'results', str(dataset_id) + '.png'))
 
+        # Sort density to find harvest and sow dates
+        sorted_density = sorted(nvdi_density, reverse=True)
+        for i in range(len(year)):
+            max_element = sorted_density[i]
+            idx = nvdi_density.index(max_element)
 
-    # There should be a 2D or 2 1D array that represent x and y values
+            harvest_dates.append(timestamps[idx])
+            sow_dates.append(timestamps[idx - 11])
 
-    # Save to /results/dataset_id.csv
+        # Convert to datetime objects and then to human readable format
+        harvest_dates = [datetime.strptime(harvest_date, '%Y%m_%d_%u') for harvest_date in harvest_dates]
+        harvest_dates = ', '.join([datetime.strftime(harvest_date, '%b %Y') for harvest_date in harvest_dates])
+
+        sow_dates = [datetime.strptime(sow_date, '%Y%m_%d_%u') for sow_date in sow_dates]
+        sow_dates = ', '.join([datetime.strftime(sow_date, '%b %Y') for sow_date in sow_dates])
+
+    return (harvest_dates, sow_dates)
 
 def extract_zip(dataset_filepath, temp_dir):
     """Extract zip file and return the root of extracted file."""
