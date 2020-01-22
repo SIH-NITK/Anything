@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -151,45 +152,50 @@ public class ShowImage extends AppCompatActivity implements BaseSliderView.OnSli
 
     }
     Context context;
-    CropInference[] cropDetails= new CropInference[0];
+    CropInference cropDetails= new CropInference();
     void getDetails(){
-        String url="http://192.168.43.208:80/api/datasets";
-        ServerRequest<JSONArray> request = new ServerRequest<JSONArray>(Request.Method.GET,
-                url,
-                JSONArray.class,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+//        TextView harvestTime=findViewById(R.id.harvestdisplay);
+//
+//
+//        String url="http://192.168.43.208:80/api/datasets";
+//        ServerRequest<JSONObject> request = new ServerRequest<JSONObject>(Request.Method.GET,
+//                url,
+//                JSONObject.class,
+//                new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject response) {
+//
+//                        cropDetails = new Gson().fromJson(response.toString(), CropInference.class);
+//                        Log.d(TAG, "onResponse: "+cropDetails);
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//                        Log.d(TAG, "onErrorResponse: "+error);
+//                    }
+//                });
+////                .withHeaders(headers);
+//        request.setRetryPolicy(new RetryPolicy() {
+//            @Override
+//            public int getCurrentTimeout() {
+//                return 50000;
+//            }
+//
+//            @Override
+//            public int getCurrentRetryCount() {
+//                return 50000;
+//            }
+//
+//            @Override
+//            public void retry(VolleyError error) throws VolleyError {
+//
+//            }
+//        });
+//        request.setTag(TAG);
+//        SingletonRequestQueue.getInstance(this).addToRequestQueue(request);
+//        harvestTime.setText(cropDetails.getHarvestSeason());
 
-                        cropDetails = new Gson().fromJson(response.toString(), CropInference[].class);
-                        Log.d(TAG, "onResponse: "+cropDetails);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d(TAG, "onErrorResponse: "+error);
-                    }
-                });
-//                .withHeaders(headers);
-        request.setRetryPolicy(new RetryPolicy() {
-            @Override
-            public int getCurrentTimeout() {
-                return 50000;
-            }
-
-            @Override
-            public int getCurrentRetryCount() {
-                return 50000;
-            }
-
-            @Override
-            public void retry(VolleyError error) throws VolleyError {
-
-            }
-        });
-        request.setTag(TAG);
-        SingletonRequestQueue.getInstance(this).addToRequestQueue(request);
     }
     RecyclerView recyclerView;
     private void setUpRecyclerView(CropInference crop) {
