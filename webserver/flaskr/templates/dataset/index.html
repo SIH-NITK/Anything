@@ -28,7 +28,7 @@
           </td>
           <td>{{ dataset['description'] }}</td>
           <td>{{ dataset['tags'] }}</td>
-          <td>{{ dataset['dataset_size'] }} MB</td>
+          <td>{{ '%0.2f' | format(dataset['dataset_file_size']|float) }} MB</td>
           <td>{{ dataset['files'] }}</td>
         </tr>
       {% endfor %}
