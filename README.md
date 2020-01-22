@@ -13,7 +13,7 @@ Useful information from the images was extraxted using some image processing tec
 - Flask
 - Android Studio
 - OpenCV
-- Matlab
+- Matplotlib
 
 ## Screenshots
 ### Web Application
